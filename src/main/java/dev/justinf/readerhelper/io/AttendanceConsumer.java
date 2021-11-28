@@ -32,7 +32,7 @@ public class AttendanceConsumer extends SheetConsumer {
                 String line = inFile.nextLine();
                 String[] parts = line.split("\t", -1); // we use TSV
                 if (parts[0].equalsIgnoreCase("Timestamp")) continue; // This is the first line, we should skip
-                if (parts.length != 5) {
+                if (parts.length < 5) {
                     // Take care of any erroneous incomplete lines
                     System.out.println("BAD INPUT! Incomplete parts. (" + parts.length + ")");
                     System.out.println(line);

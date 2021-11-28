@@ -35,7 +35,7 @@ public class StatusConsumer extends SheetConsumer {
                 String line = inFile.nextLine();
                 String[] parts = line.split("\t", -1); // we use TSV
                 if (parts[0].equalsIgnoreCase("Timestamp")) continue; // This is the first line, we should skip
-                if (parts.length != 8) {
+                if (parts.length < 8) {
                     // Take care of any erroneous incomplete lines
                     System.out.println("BAD INPUT! Incomplete parts. (" + parts.length + ")");
                     System.out.println(line);
@@ -74,7 +74,11 @@ public class StatusConsumer extends SheetConsumer {
                 le.setLastName(parts[2]);
                 le.setNetId(parts[3]);
                 le.setStudentId(parts[4]);
-                le.setStatus(parts[5] + "/" + parts[6] + "/" + parts[7]);
+                le.setStatus(parts[5]);
+                // Support for extra columns
+                for (int i = 6; i < parts.length; i++) {
+                    le.setStatus(le.getStatus() + "/" + parts[i]);
+                }
 
                 // Now, add to main program
                 rh.processLabEvent(le);
