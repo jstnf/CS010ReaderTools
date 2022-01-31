@@ -33,6 +33,10 @@ public class ElearnBean {
         return name;
     }
 
+    public String geteLearnId() {
+        return eLearnId;
+    }
+
     public String getNetId() {
         return netId;
     }

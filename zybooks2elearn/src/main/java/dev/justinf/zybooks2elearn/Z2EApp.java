@@ -15,8 +15,10 @@ import javax.swing.*;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.PrintStream;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class Z2EApp {
@@ -158,23 +160,80 @@ public class Z2EApp {
         try {
             long currentTime = System.currentTimeMillis();
             File f = new File("./" + currentTime + ".csv");
-            log("Exporting to " + f.getPath() + "!");
+            log("Exporting to " + f.getAbsolutePath() + "!");
+
+            // This writing strategy provided by opencsv does not allow
+            // proper column ordering - so we will write the file manually.
+            /*
             Writer writer = new FileWriter(f);
-            HeaderColumnNameMappingStrategy mappingStrategy = new HeaderColumnNameMappingStrategy();
-            mappingStrategy.captureHeader(new CSVReader(new FileReader(eLearnFile)));
             StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer)
-                    .withMappingStrategy(mappingStrategy)
                     .withApplyQuotesToAll(false)
                     .build();
             beanToCsv.write(gradebook.getBeans());
             writer.close();
+             */
+
+            // Manual file write begin
+            PrintStream ps = new PrintStream(f);
+
+            // Handle header first
+            StringBuilder header = new StringBuilder("Student,ID,SIS Login ID,Section");
+            // Get list of assignments and append them based on list order
+            ElearnBean sampler = gradebook.getBeans().get(0);
+            List<String> assignmentNames = new ArrayList<>(sampler.getAssignments().keys());
+            if (!assignmentNames.isEmpty()) {
+                header.append(",");
+                for (int i = 0; i < assignmentNames.size() - 1; i++) {
+                    header.append(handleComma(assignmentNames.get(i))).append(",");
+                }
+                header.append(handleComma(assignmentNames.get(assignmentNames.size() - 1)));
+            }
+            ps.println(header.toString());
+
+            // Now handle each bean
+            gradebook.getBeans().forEach(bean -> {
+                StringBuilder sb = new StringBuilder();
+                sb.append(handleComma(bean.getName())).append(",");
+                sb.append(handleComma(bean.geteLearnId())).append(",");
+                sb.append(handleComma(bean.getNetId())).append(",");
+                sb.append(handleComma(bean.getSection()));
+
+                if (!bean.getAssignments().isEmpty()) {
+                    sb.append(",");
+                    for (int i = 0; i < assignmentNames.size() - 1; i++) {
+                        sb.append(handleComma(bean.getAssignments()
+                                .get(assignmentNames.get(i))
+                                .stream()
+                                .findFirst()
+                                .orElse("")
+                        )).append(",");
+                    }
+                    header.append(handleComma(bean.getAssignments()
+                            .get(assignmentNames.get(assignmentNames.size() - 1))
+                            .stream()
+                            .findFirst()
+                            .orElse("")
+                    ));
+                }
+                ps.println(sb.toString());
+            });
+            ps.close();
 
             log("Export complete. Please review the file before uploading to eLearn!");
             log("NOTE: If you previously performed grade transfers in the same session, they will be reflected in addition to your current transfer in the exported file!");
             log("NOTE2: To continue progress on the exported file in a new session (after closing this app), load it in the eLearn Gradebook section in the \"Load\" tab.");
-        } catch (Exception ignored) {
-
+        } catch (Exception e) {
+            e.printStackTrace();
+            log("Export failed. Please see console.");
         }
+    }
+
+    private String handleComma(String s) {
+        String result = s;
+        if (s.contains(",")) {
+            result = "\"" + s + "\"";
+        }
+        return result;
     }
 
     public void log(Object o) {
