@@ -20,7 +20,7 @@ public class AppFrame {
     private JLabel labelZybooksAssignment;
     private JLabel labelElearnAssignment;
     private JPanel panelGradingAssignments;
-    private JButton transferButton;
+    private JButton buttonTransfer;
     private JTextField textFieldZybooksFilePath;
     private JTextField textFieldElearnFilePath;
     private JButton buttonZybooksFileSelect;
@@ -31,7 +31,7 @@ public class AppFrame {
     public AppFrame(Z2EApp app) {
         this.app = app;
 
-        transferButton.addActionListener(e -> {
+        buttonTransfer.addActionListener(e -> {
             app.transferAndExport(comboBoxZybooks.getSelectedItem().toString(), comboBoxElearn.getSelectedItem().toString());
         });
 

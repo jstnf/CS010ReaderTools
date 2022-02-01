@@ -1,9 +1,5 @@
 package dev.justinf.zybooks2elearn;
 
-import com.opencsv.CSVReader;
-import com.opencsv.bean.HeaderColumnNameMappingStrategy;
-import com.opencsv.bean.StatefulBeanToCsv;
-import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import dev.justinf.zybooks2elearn.consumer.ElearnGradebookConsumer;
 import dev.justinf.zybooks2elearn.consumer.ZybooksGradeReportConsumer;
 import dev.justinf.zybooks2elearn.data.ElearnBean;
@@ -13,12 +9,8 @@ import dev.justinf.zybooks2elearn.data.ZybooksGradeReport;
 
 import javax.swing.*;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.PrintStream;
-import java.io.Writer;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class Z2EApp {
