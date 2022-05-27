@@ -200,7 +200,7 @@ public class Z2EApp {
                                 .orElse("")
                         )).append(",");
                     }
-                    header.append(handleComma(bean.getAssignments()
+                    sb.append(handleComma(bean.getAssignments()
                             .get(assignmentNames.get(assignmentNames.size() - 1))
                             .stream()
                             .findFirst()
