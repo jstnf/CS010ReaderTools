@@ -3,6 +3,7 @@ package dev.justinf.zybooks2elearn;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.DefaultCaret;
+import java.io.File;
 
 public class AppFrame {
 
@@ -37,6 +38,7 @@ public class AppFrame {
 
         buttonZybooksFileSelect.addActionListener(e -> {
             JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setCurrentDirectory(new File("."));
             fileChooser.setDialogTitle("Select file containing zyBooks Assignment Report...");
             fileChooser.setFileFilter(new FileNameExtensionFilter("Comma-separated values (*.csv)", "csv"));
             fileChooser.setMultiSelectionEnabled(false);
@@ -48,6 +50,7 @@ public class AppFrame {
 
         buttonElearnFileSelect.addActionListener(e -> {
             JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setCurrentDirectory(new File("."));
             fileChooser.setDialogTitle("Select file containing eLearn Gradebook...");
             fileChooser.setFileFilter(new FileNameExtensionFilter("Comma-separated values (*.csv)", "csv"));
             fileChooser.setMultiSelectionEnabled(false);
