@@ -6,7 +6,7 @@
 
     <groupId>dev.justinf</groupId>
     <artifactId>zybooks2elearn</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -29,7 +29,7 @@
         <dependency>
             <groupId>com.jetbrains.intellij.java</groupId>
             <artifactId>java-gui-forms-rt</artifactId>
-            <version>LATEST</version>
+            <version>221.5591.52</version>
         </dependency>
     </dependencies>
 
@@ -95,12 +95,12 @@
                     <dependency>
                         <groupId>com.jetbrains.intellij.java</groupId>
                         <artifactId>java-compiler-ant-tasks</artifactId>
-                        <version>LATEST</version>
+                        <version>221.5591.52</version>
                     </dependency>
                     <dependency>
                         <groupId>com.jetbrains.intellij.java</groupId>
                         <artifactId>java-gui-forms-rt</artifactId>
-                        <version>LATEST</version>
+                        <version>221.5591.52</version>
                     </dependency>
                 </dependencies>
                 <executions>
